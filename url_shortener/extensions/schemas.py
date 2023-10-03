@@ -1,13 +1,17 @@
 from datetime import date
+
 from pydantic import BaseModel
+from pydantic import HttpUrl
 
 
 class UrlSchema(BaseModel):
-    """"""
-    url: str
+    """Url request body base schema"""
+
+    url: HttpUrl
+
 
 class UrlInfo(UrlSchema):
-    """"""
-    original_url: str
-    clicks: int
+    """Url response body base schema"""
+
+    encoded_url: HttpUrl
     creation_date: date
