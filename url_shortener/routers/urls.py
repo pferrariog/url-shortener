@@ -1,35 +1,37 @@
 from typing import Annotated
 
 from fastapi import APIRouter
+from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import Path
 from fastapi.responses import RedirectResponse
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+from url_shortener.extensions.database import UrlModel
+from url_shortener.extensions.database import get_db_connection
 from url_shortener.extensions.schemas import UrlInfo
 from url_shortener.extensions.schemas import UrlSchema
-from validators import url as url_valid
+from url_shortener.extensions.services import insert_url_into_db
 
 
 router = APIRouter(prefix="/api")
 
 
-@router.get("/{encoded_url}", status_code=200)
-async def get_real_url(
-    encoded_url: Annotated[str, Path(title="URL code to exchange for the real one")]
+@router.get("/{reference_code}", status_code=200)
+def get_real_url(
+    reference_code: Annotated[str, Path(title="URL code to exchange for the real one")],
+    session: Session = Depends(get_db_connection),
 ) -> RedirectResponse:
     """Retrieve the original url of a given code"""
-    real_url = ...
+    url_response = session.scalar(select(UrlModel).where(UrlModel.reference_code == reference_code))
+    if not url_response:
+        raise HTTPException(status_code=404, detail=f"URL {reference_code} not found")
 
-    if not url_valid(encoded_url):
-        raise ...
-
-    if encoded_url not in ...:
-        raise HTTPException(status_code=404, detail=f"URL {encoded_url} not found")
-
-    return RedirectResponse(real_url)
+    return RedirectResponse(url_response["original_url"])
 
 
 @router.post("/", status_code=200, response_model=UrlInfo)
-async def make_url_shorter(url_info: UrlSchema) -> UrlInfo:
+def make_url_shorter(url_info: UrlSchema, session: Session = Depends(get_db_connection)) -> UrlInfo:
     """Send the URL and retrieve the reference code"""
-    ...
-    return ...
+    url_response = insert_url_into_db(session, url_info)
+    return url_response

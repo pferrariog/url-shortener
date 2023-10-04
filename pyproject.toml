@@ -10,7 +10,6 @@ packages = [{include = "url_shortener"}]
 python = "^3.11"
 fastapi = "^0.103.1"
 uvicorn = "^0.23.2"
-validators = "^0.22.0"
 sqlalchemy = "^2.0.21"
 alembic = "^1.12.0"
 
@@ -84,6 +83,7 @@ ignore = [
   "ANN003",
   "ANN002",
   "ANN1",
+  "B008"
 ]
 per-file-ignores = [
   "tests/*:ANN,D"

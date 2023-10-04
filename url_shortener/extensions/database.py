@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 
 
 base = declarative_base()
+db_url = ""  # set environment manager like dynaconf
 
 
 class UrlModel(base):
@@ -22,8 +23,8 @@ class UrlModel(base):
     creation_date = Column(DateTime, default=datetime.now)
 
 
-def get_db_connection(db_url: str):
+def get_db_connection():
     """Get the database"""
-    engine = create_engine(db_url)  # set as global
+    engine = create_engine(db_url)
     with Session(engine) as session:
         yield session()
