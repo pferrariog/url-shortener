@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from settings import settings
 from sqlalchemy import Column
 from sqlalchemy import DateTime
 from sqlalchemy import Integer
@@ -10,7 +11,6 @@ from sqlalchemy.orm import Session
 
 
 base = declarative_base()
-db_url = ""  # set environment manager like dynaconf
 
 
 class UrlModel(base):
@@ -25,6 +25,6 @@ class UrlModel(base):
 
 def get_db_connection():
     """Get the database"""
-    engine = create_engine(db_url)
+    engine = create_engine(settings.DATABASE_URL)
     with Session(engine) as session:
         yield session()

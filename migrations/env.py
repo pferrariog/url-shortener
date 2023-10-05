@@ -4,10 +4,11 @@ from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from url_shortener.extensions.database import base
+from url_shortener.settings import settings
 
 
 config = context.config
-config.set_main_option("sqlalchemy.url", "sqlite:///database.db")
+config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
