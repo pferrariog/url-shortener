@@ -27,7 +27,7 @@ def get_real_url(
     if not url_response:
         raise HTTPException(status_code=404, detail=f"URL {reference_code} not found")
 
-    return RedirectResponse(url_response["original_url"])
+    return RedirectResponse(url_response.original_url)
 
 
 @router.post("/", status_code=200, response_model=UrlInfo)

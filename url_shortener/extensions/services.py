@@ -20,18 +20,18 @@ def create_url_reference_code() -> str:
 def insert_url_into_db(session: Session, url_info: UrlSchema):
     """Send data to the table only if any of items don't exist in the table"""
     url_reference_code = create_url_reference_code()
-    # improve ref code uniqueness check... maybe hashing..
+    # TODO split this check in 2 others
+    # one - check and return detail and the UrlInfo content instead of an exception if url already exists
+    # two - check and apply a recursive function to create a new ref code if already exists
     exists = (
         session.query(UrlModel)
-        .filter(or_(UrlModel.reference_code == url_reference_code, UrlModel.original_url == url_info["url"]))
+        .filter(or_(UrlModel.reference_code == url_reference_code, UrlModel.original_url == url_info.url))
         .first()
     )
     if exists:
         raise HTTPException(status_code=400, detail="Url already exists")
-        # check if its better to return this detail and the UrlInfo content instead of an exception
-    new_register = UrlModel(original_url=url_info["url"], reference_code=url_reference_code)
+    new_register = UrlModel(original_url=url_info.original_url.__str__(), reference_code=url_reference_code)
     session.add(new_register)
     session.commit()
     session.refresh(new_register)
-
     return new_register

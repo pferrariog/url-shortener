@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from pydantic import BaseModel
 from pydantic import HttpUrl
@@ -7,11 +7,11 @@ from pydantic import HttpUrl
 class UrlSchema(BaseModel):
     """Url request body base schema"""
 
-    url: HttpUrl
+    original_url: HttpUrl
 
 
 class UrlInfo(UrlSchema):
     """Url response body base schema"""
 
-    encoded_url: HttpUrl
-    creation_date: date
+    reference_code: str
+    creation_date: datetime
