@@ -20,13 +20,19 @@ def create_url_reference_code(session: Session) -> str:
     return reference_code
 
 
-def insert_url_into_db(session: Session, url_info: UrlSchema):
+def set_reference_code(session: Session, url_info: UrlSchema) -> str:
+    """Return reference code value based on user input data"""
+    if not url_info.reference_code:
+        return create_url_reference_code(session)
+    return url_info.reference_code
+
+
+def insert_url_into_db(session: Session, url_info: UrlSchema) -> UrlModel:
     """Send data to the table only if any of items don't exist in the table"""
     url_exists = session.scalar(select(UrlModel).where(UrlModel.original_url == url_info.original_url.__str__()))
     if url_exists:
         return UrlExists(url_exists, message="Url register already exists!")
-
-    url_reference_code = create_url_reference_code(session)
+    url_reference_code = set_reference_code(session, url_info)
     new_register = UrlModel(original_url=url_info.original_url.__str__(), reference_code=url_reference_code)
     session.add(new_register)
     session.commit()

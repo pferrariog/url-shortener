@@ -8,12 +8,12 @@ class UrlSchema(BaseModel):
     """Url request body base schema"""
 
     original_url: HttpUrl
+    reference_code: str = None
 
 
 class UrlInfo(UrlSchema):
     """Url response body base schema"""
 
-    reference_code: str  # TODO maybe add an alias optional request body field?
     creation_date: datetime
 
 
