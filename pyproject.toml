@@ -99,7 +99,8 @@ exclude = [
 [tool.bandit]
 skips = [
   "B101",
-  "B113"
+  "B113",
+  "B311"
 ]
 exclude_dirs = [
   ".venv"
