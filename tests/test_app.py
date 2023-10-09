@@ -20,7 +20,7 @@ def test_url_already_exists_and_return_url(client, url) -> None:
     """Test code already exists and return the object"""
     response = client.post("/api/", json={"original_url": "http://teste.com", "reference_code": "teste"})
 
-    assert response.json()["message"] == "Url register already exists!"
+    assert response.json() == {"detail": "Url register already exists!"}
 
 
 def test_given_reference_code_already_exists(client, url) -> None:
