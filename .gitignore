@@ -3,3 +3,4 @@ poetry.toml
 **/__pycache__
 database.db
 .env
+.pytest_cache
