@@ -28,6 +28,7 @@ pytest = "^7.4.2"
 flake8-bugbear = "^23.9.16"
 flake8-docstrings = "^1.7.0"
 pyproject-flake8 = "^6.1.0"
+httpx = "^0.25.0"
 
 
 [build-system]
@@ -105,3 +106,7 @@ skips = [
 exclude_dirs = [
   ".venv"
 ]
+
+[tool.pytest.ini_options]
+pythonpath = "."
+filterwarnings=["ignore::DeprecationWarning"]

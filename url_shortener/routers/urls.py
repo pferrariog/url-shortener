@@ -32,7 +32,7 @@ def get_real_url(
     return RedirectResponse(url_response.original_url)
 
 
-@router.post("/", status_code=200, response_model=Union[UrlInfo, UrlExists])
+@router.post("/", status_code=201, response_model=Union[UrlInfo, UrlExists])
 def make_url_shorter(url_info: UrlSchema, session: Session = Depends(get_db_connection)) -> Union[UrlInfo, UrlExists]:
     """Send the URL and retrieve the reference code"""
     url_response = insert_url_into_db(session, url_info)
