@@ -34,7 +34,12 @@ def insert_url_into_db(session: Session, url_info: UrlSchema) -> UrlModel:
     """Send data to the table only if any of items don't exist in the table"""
     url_exists = session.scalar(select(UrlModel).where(UrlModel.original_url == url_info.original_url.__str__()))
     if url_exists:
-        return UrlExists(url_exists, message="Url register already exists!")
+        return UrlExists(
+            original_url=url_exists.original_url,
+            reference_code=url_exists.reference_code,
+            creation_date=url_exists.creation_date,
+            message="Url register already exists!",
+        )
     url_reference_code = set_url_reference_code(session, url_info)
     new_register = UrlModel(original_url=url_info.original_url.__str__(), reference_code=url_reference_code)
     session.add(new_register)
