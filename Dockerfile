@@ -3,7 +3,7 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 
 WORKDIR /app
 
-RUN apt update && apt install -y libpq-dev
+RUN apt-get update && apt-get install -y libpq-dev gcc
 
 RUN pip install poetry
 
