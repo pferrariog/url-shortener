@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from url_shortener.routers.urls import router as url_router
 
 from .settings import settings
@@ -16,11 +17,9 @@ def create_app(title: str, docs_url: str, description: str, routers: list) -> Fa
     for route in routers:
         app.include_router(route)
 
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=settings.ORIGINS,
-        allow_methods=["*"]
-    )
+    app.add_middleware(CORSMiddleware, allow_origins=settings.ORIGINS, allow_methods=["*"])
+
+    app.mount("/static", StaticFiles(directory="static"), name="static")
 
     return app
 
