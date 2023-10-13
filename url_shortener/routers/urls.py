@@ -19,7 +19,7 @@ from url_shortener.extensions.services import insert_url_into_db
 router = APIRouter(prefix="/api")
 
 
-@router.get("/{reference_code}", status_code=307, response_model=RedirectResponse)
+@router.get("/{reference_code}", status_code=307, response_model=None)
 def get_real_url(
     reference_code: Annotated[str, Path(title="URL code to exchange for the real one")],
     session: Session = Depends(get_db_connection),
