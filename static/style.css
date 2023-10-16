@@ -1,15 +1,10 @@
-.header {
-    align-items: center;
-    justify-content: center;
-    height: 10vh;
-}
-
 body {
-    display: flex;
-    flex-direction: column;
     background-repeat: no-repeat;
     background-position: center;
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    overflow: hidden;
+    height: 100%;
 }
 
 .main {
@@ -18,12 +13,16 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 80vh;
+    min-height: 90vh;
 }
 
 .footer {
-    justify-content: center;
+    background-color: #f3eeee;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 25px;
+    max-height: 35px;
 }
 
 #urlInput {
@@ -51,6 +50,24 @@ body {
     font-size: 18px;
 }
 
-.main div h1{
+.main div h1, h4{
     color: rgb(74, 199, 74);
 }
+
+.main h4 {
+    margin-top: 50px;
+}
+
+.main .output {
+    border: 1px solid #dcdcdc;
+    background-color: #f3eeee;
+    min-width: 30%;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+::placeholder {
+    text-align: center;
+ }
