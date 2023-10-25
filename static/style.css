@@ -1,0 +1,111 @@
+body {
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    overflow: hidden;
+    height: 100%;
+}
+
+.main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 90vh;
+}
+
+.footer {
+    background-color: #f3eeee;
+    color: #999;
+    text-align: center;
+    padding: 25px;
+    max-height: 15px;
+    font-size: 13px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.footer a {
+    color: #5a5757;
+}
+
+#urlInput {
+    height: 40px;
+    min-width: 50vw;
+    max-width: 75vw;
+    border-radius: 4px;
+    border: 1px solid #dcdcdc;
+    margin: 8px;
+    text-align: center;
+}
+
+#urlInput::placeholder {
+    text-align: center;
+ }
+
+#urlInput:focus::placeholder {
+    color: transparent;
+}
+
+#shortenButton {
+    height: 30px;
+    min-width: 10vw;
+    max-width: 20vw;
+    border-radius: 4px;
+    border: 1px solid black;
+    margin: 8px;
+    background-color: rgb(111, 240, 208);
+    font-size: 13px;
+    color: black;
+    cursor: pointer;
+}
+
+#shortenButton:hover {
+    filter: brightness(105%);
+    cursor: pointer;
+}
+
+#shortenButton:disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: rgb(204, 233, 226);
+}
+
+.main label {
+    font-size: 18px;
+}
+
+.main div h1, h4{
+    color: rgb(74, 199, 74);
+}
+
+.main h4 {
+    margin-top: 50px;
+    visibility: hidden;
+}
+
+.main #output {
+    border: 1px solid #dcdcdc;
+    background-color: #f3eeee;
+    min-width: 30%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    visibility: hidden;
+    position: relative;
+}
+
+#copyIcon {
+    position: absolute;
+    right: 8px;
+}
+
+#copyIcon:hover {
+    cursor: pointer;
+}

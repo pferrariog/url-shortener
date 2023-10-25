@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     APP_NAME: str
     DOCS_PATH: str
     APP_DESCRIPTION: str
+    ORIGINS: str
 
 
 settings = Settings()
