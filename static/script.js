@@ -2,6 +2,8 @@ var urlShortened = false;
 
 async function cutUrl(originalUrl, shortenedUrl) {
     const currentUrl = window.location.href;
+    document.getElementById("output").style.visibility = "visible";
+    document.getElementById("outputTitle").style.visibility = "visible";
     try {
         const response = await fetch(currentUrl + "api/", {
             method: "POST",
@@ -12,36 +14,50 @@ async function cutUrl(originalUrl, shortenedUrl) {
         });
 
         if (response.status === 400 || response.status === 422) {
-            shortenedUrl.textContent = await response.json();  // error body detail
+            shortenedUrl.textContent = "URL must be HTTP, fix it!";
             return
         }
 
         if (response.ok) {
             const json_content = await response.json();
             shortenedUrl.textContent = currentUrl + json_content.reference_code;
-            document.getElementById("output").visibility = visible;
-            document.getElementById("outputTitle").visibility = visible;
+            shortenButton.disabled = true;
             urlShortened = true;
         } else {
-            shortenedUrl.textContent = "Error while creating shortened URL, try again later!";
+            shortenedUrl.textContent = "Error while creating URL, try again!";
             return
         }
     } catch (error) {
-        shortenedUrl.textContent = "Error while creating shortened URL, try again later!";
+        shortenedUrl.textContent = "Error while creating URL, try again!";
         return
     }
 }
+
+async function copyToClipboard () {
+    var outputText = document.getElementById("urlOutput").textContent;
+    try {
+        await navigator.clipboard.writeText(outputText);
+    } catch(error) {
+        console.log();
+    }
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const shortenButton = document.getElementById("shortenButton");
     const originalUrl = document.getElementById("urlInput")
     const shortenedUrl = document.getElementById("urlOutput");
-    shortenButton.addEventListener("click", cutUrl(originalUrl.value, shortenedUrl));
-
-    originalUrl.addEventListener("focus", function () {
+    const copyIcon = document.getElementById("copyIcon");
+    shortenButton.addEventListener("click", () => {
+        cutUrl(originalUrl.value, shortenedUrl)
+    });
+    originalUrl.addEventListener("focus", () => {
         if (urlShortened) {
             shortenButton.disabled = false;
             urlShortened = false;
         }
     })
+    copyIcon.addEventListener("click", () => {
+        copyToClipboard()
+    });
 });
