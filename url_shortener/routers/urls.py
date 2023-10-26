@@ -15,7 +15,7 @@ from url_shortener.extensions.schemas import UrlSchema
 from url_shortener.extensions.services import insert_url_into_db
 
 
-router = APIRouter(prefix="/api")
+router = APIRouter(prefix="/api", tags=["Url"])
 
 
 @router.get("/{reference_code}", status_code=200, response_model=None)

@@ -20,7 +20,3 @@ Create a short url to your giant URL
 
 - Python 3.11+
 - Poetry 2.0+
-
-## TODO
-
-- Create a homepage to embed the API usage
