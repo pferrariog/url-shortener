@@ -13,7 +13,7 @@ from url_shortener.extensions.database import UrlModel
 from url_shortener.extensions.database import get_db_connection
 
 
-router = APIRouter()
+router = APIRouter(include_in_schema=False)
 
 
 @router.get("/", response_model=None)
@@ -27,7 +27,7 @@ def get_real_url(
     reference_code: Annotated[str, Path(title="URL code to exchange for the real one")],
     session: Session = Depends(get_db_connection),
 ) -> Union[RedirectResponse, None]:
-    """Retrieve the original url of a given code"""
+    """Redirect the user to original url of a given code"""
     url_response = session.scalar(select(UrlModel).where(UrlModel.reference_code == reference_code))
     if not url_response:
         raise HTTPException(status_code=404, detail=f"URL {reference_code} not found")

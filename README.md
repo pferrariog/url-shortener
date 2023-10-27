@@ -1,6 +1,10 @@
 # URL Shortener App
 
-Create a short url to your giant URL
+I don't like big URLs, so I made a way to shorten them, but not just for me.
+
+## Usage
+
+Instead of just an API, a webpage was created too. Just get to [URL Shortener Homepage](urlshortener.pedrohferrari.com) and try it yourself!
 
 ## How to Run
 
@@ -11,16 +15,15 @@ Create a short url to your giant URL
 
   - Start app with uvicorn
 
-        poetry run uvicorn url_shortener.app:app
+        uvicorn url_shortener.app:app
 
 - Docker
-  - TODO
+  - Run app with Docker Compose
+
+        docker compose up --build
 
 ## Dependencies
 
 - Python 3.11+
 - Poetry 2.0+
-
-## TODO
-
-- Create a homepage to embed the API usage
+- Docker (Optional)

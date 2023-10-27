@@ -109,3 +109,13 @@ body {
 #copyIcon:hover {
     cursor: pointer;
 }
+
+.header {
+    text-align: end;
+    margin: 10px;
+    font-size: 13px;
+}
+
+.header a{
+    color: rgb(66, 160, 66);
+}
