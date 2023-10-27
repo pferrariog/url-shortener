@@ -46,3 +46,11 @@ def insert_url_into_db(session: Session, url_info: UrlSchema) -> UrlModel:
     session.commit()
     session.refresh(new_register)
     return new_register
+
+
+def get_url_from_db(session: Session, reference_code: str) -> UrlModel:
+    """Get the original url from database"""
+    url_response = session.scalar(select(UrlModel).where(UrlModel.reference_code == reference_code))
+    if not url_response:
+        raise HTTPException(status_code=404, detail=f"URL {reference_code} not found")
+    return url_response

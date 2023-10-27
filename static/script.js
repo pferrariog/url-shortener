@@ -1,7 +1,7 @@
+const currentUrl = window.location.href;
 var urlShortened = false;
 
 async function cutUrl(originalUrl, shortenedUrl) {
-    const currentUrl = window.location.href;
     document.getElementById("output").style.visibility = "visible";
     document.getElementById("outputTitle").style.visibility = "visible";
     try {
@@ -44,6 +44,7 @@ async function copyToClipboard () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+    apiDocsLink.href = currentUrl + "api/docs";
     const shortenButton = document.getElementById("shortenButton");
     const originalUrl = document.getElementById("urlInput")
     const shortenedUrl = document.getElementById("urlOutput");

@@ -3,30 +3,26 @@ from typing import Union
 
 from fastapi import APIRouter
 from fastapi import Depends
-from fastapi import HTTPException
 from fastapi import Path
-from sqlalchemy import select
 from sqlalchemy.orm import Session
-from url_shortener.extensions.database import UrlModel
 from url_shortener.extensions.database import get_db_connection
 from url_shortener.extensions.schemas import UrlExists
 from url_shortener.extensions.schemas import UrlInfo
 from url_shortener.extensions.schemas import UrlSchema
+from url_shortener.extensions.services import get_url_from_db
 from url_shortener.extensions.services import insert_url_into_db
 
 
 router = APIRouter(prefix="/api", tags=["Url"])
 
 
-@router.get("/{reference_code}", status_code=200, response_model=None)
+@router.get("/{reference_code}", status_code=200, response_model=UrlInfo)
 def get_real_url(
     reference_code: Annotated[str, Path(title="URL code to exchange for the real one")],
     session: Session = Depends(get_db_connection),
 ) -> Union[UrlInfo, None]:
     """Retrieve the original url of a given code"""
-    url_response = session.scalar(select(UrlModel).where(UrlModel.reference_code == reference_code))
-    if not url_response:
-        raise HTTPException(status_code=404, detail=f"URL {reference_code} not found")
+    url_response = get_url_from_db(session, reference_code)
     return url_response
 
 
